@@ -25,18 +25,26 @@
 \ProcessOptionsBeamer%
 
 % 定义主形象标志 (logo) 和 子形象标识 (sublogo) 的文件夹路径
-\def\ucasbeamer@pathname@logo{logo/}
-\def\ucasbeamer@pathname@sublogo{sublogo/}
+\newcommand{\ucasbeamer@pathname@logo}{logo/}
+\newcommand{\ucasbeamer@pathname@sublogo}{sublogo/}
 
 % 定义主形象标志的文件名
-\def\ucasbeamerfilenamelogo{%
+\newcommand{\ucasbeamerfilenamelogo}{%
   \ucasbeamer@pathname@logo \ucasbeamer@option@logo%
 }
 
 % 定义子形象标志的文件名
-\def\ucasbeamerfilenamesublogo{%
+\newcommand{\ucasbeamerfilenamesublogo}{%
   \ucasbeamer@pathname@sublogo \ucasbeamer@option@sublogo%
 }
+
+% 定义导师、指导老师、研究方向的命令
+\newcommand{\insertmentor}{}
+\newcommand{\insertadvisor}{}
+\newcommand{\insertresearchdirection}{}
+\newcommand{\mentor}[1]{\renewcommand{\insertmentor}{{#1}}}
+\newcommand{\advisor}[1]{\renewcommand{\insertadvisor}{{#1}}}
+\newcommand{\researchdirection}[1]{\renewcommand{\insertresearchdirection}{{#1}}}
 
 % --------------------------------- 预设长度 --------------------------------- %
 % 定义边界间隔距离
@@ -97,7 +105,7 @@
   \vtop{{%
     \usebeamerfont{frametitle}{\insertframetitle}%
     \ifx\insertframesubtitle\empty\else\\
-      \usebeamerfont{framesubtitle}{\insertframesubtitle}
+    \usebeamerfont{framesubtitle}{\insertframesubtitle}
     \fi}
     \vfill}}
 
@@ -107,9 +115,9 @@
 % 设置背景
 \setbeamertemplate{background canvas}{%
   \ifnum\value{page}=1
-    \let\ucasbeamertemplength\ucasbeamerlogoheighttitlepage%
+  \let\ucasbeamertemplength\ucasbeamerlogoheighttitlepage%
   \else
-    \let\ucasbeamertemplength\ucasbeamerlogoheight%
+  \let\ucasbeamertemplength\ucasbeamerlogoheight%
   \fi
   \leavevmode\hskip\ucasbeamermargin%
   \includegraphics[height=\ucasbeamertemplength]{\ucasbeamerfilenamelogo}
@@ -119,34 +127,28 @@
 \setbeamertemplate{footline}{%
   \hskip\ucasbeamermargin%
   \usebeamercolor[fg]{author in head/foot}%
-    \usebeamerfont{author in head/foot}\insertshortauthor%
-    \lower2pt\hbox{\Large$\cdot$}
+  \usebeamerfont{author in head/foot}\insertshortauthor%
+  \lower2pt\hbox{\Large$\cdot$}
   \usebeamercolor[fg]{title in head/foot}%
-    \usebeamerfont{title in head/foot}\insertshorttitle%
-    \lower2pt\hbox{\Large$\cdot$}
+  \usebeamerfont{title in head/foot}\insertshorttitle%
+  \lower2pt\hbox{\Large$\cdot$}
   \usebeamercolor[fg]{date in head/foot}%
-    \usebeamerfont{date in head/foot}\insertshortdate%
+  \usebeamerfont{date in head/foot}\insertshortdate%
   \hfill
   \insertframenumber{} / \inserttotalframenumber%
   \hskip\ucasbeamermargin%
   \vrule width 0pt height \ucasbeamerfootlineheight%
-         depth \ucasbeamerfootlinebottompadding}
+  depth \ucasbeamerfootlinebottompadding}
 
 % 设置扉页
 \setbeamertemplate{title page}{%
   \vfill
   \begin{center}
-    {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}%
+  {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}%
     \medskip
 
     {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle}%
     \vfill
-
-    {\usebeamerfont{author} \insertauthor}%
-    \medskip
-
-    {\usebeamerfont{institute} \insertinstitute}%
-    \medskip
 
     \includegraphics%
     [
@@ -154,7 +156,20 @@
       height=.15\textheight,
       keepaspectratio
     ]{\ucasbeamerfilenamesublogo}%
+
+    {\usebeamerfont{institute} \insertinstitute}%
+    \medskip
+
     \vfill
+
+    {\usebeamerfont{author} 导师：\insertmentor}%
+
+    {\usebeamerfont{author} 指导老师：\insertadvisor}%
+
+    {\usebeamerfont{author} 研究方向：\insertresearchdirection}%
+
+    {\usebeamerfont{author} 报告人：\insertauthor}%
+    \medskip
 
     {\usebeamerfont{date}\centering \insertdate}%
   \end{center}
@@ -242,11 +257,11 @@
   \ifboolexpr{test {\ifentrytype{book}} or test {\ifentrytype{mvbook}}
     or test {\ifentrytype{collection}} or test {\ifentrytype{mvcollection}}
     or test {\ifentrytype{reference}} or test {\ifentrytype{mvreference}} }
-    {\setbeamertemplate{bibliography item}[book]}
-    {\ifentrytype{online}
-      {\setbeamertemplate{bibliography item}[online]}
-      {\setbeamertemplate{bibliography item}[article]}}%
-    \usebeamertemplate{bibliography item}}
+  {\setbeamertemplate{bibliography item}[book]}
+  {\ifentrytype{online}
+  {\setbeamertemplate{bibliography item}[online]}
+  {\setbeamertemplate{bibliography item}[article]}}%
+  \usebeamertemplate{bibliography item}}
 
 \mode<all>
 \endinput
